@@ -10,20 +10,20 @@ namespace qlbhAPI.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "IsActive",
-                table: "Khoa");
+            migrationBuilder.AddColumn<string>(
+                name: "UrlImage",
+                table: "Khoa",
+                type: "nvarchar(150)",
+                maxLength: 150,
+                nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsActive",
-                table: "Khoa",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.DropColumn(
+                name: "UrlImage",
+                table: "Khoa");
         }
     }
 }

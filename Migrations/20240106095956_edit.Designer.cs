@@ -12,7 +12,7 @@ using qlbhAPI.Models.Entity;
 namespace qlbhAPI.Migrations
 {
     [DbContext(typeof(QuanLyBanHoaContext))]
-    [Migration("20240105101730_edit")]
+    [Migration("20240106095956_edit")]
     partial class edit
     {
         /// <inheritdoc />
@@ -129,6 +129,10 @@ namespace qlbhAPI.Migrations
                         .HasColumnName("SDT");
 
                     b.Property<string>("TenKhoa")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("UrlImage")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 

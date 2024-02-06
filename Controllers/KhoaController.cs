@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using qlbhAPI.Common;
 using qlbhAPI.Models.Entity;
 using qlbhAPI.Models.Khoa;
 using System.Text.Json;
@@ -8,6 +10,7 @@ namespace qlbhAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	//[Authorize(Roles = "users")]
 	public class KhoaController : ControllerBase
 	{
 		private readonly QuanLyBanHoaContext _context;
@@ -26,7 +29,7 @@ namespace qlbhAPI.Controllers
 					MaKhoa = c.MaKhoa,
 					TenKhoa = c.TenKhoa,
 					Sdt = c.Sdt,
-					//UrlImages = c.UrlImages,
+					UrlImages = c.UrlImages,
 				})
 				.ToList();
 			return Ok(items);
@@ -56,7 +59,7 @@ namespace qlbhAPI.Controllers
 		//api post data
 		[HttpPost("them-moi-khoa")]
 		//public IActionResult TaoKhoa(InputKhoa input)
-		public IActionResult TaoKhoa([FromForm] InputKhoa input)
+		public IActionResult TaoKhoa(InputKhoa input)
 		{
 			if (ModelState.IsValid)
 			{
@@ -67,19 +70,21 @@ namespace qlbhAPI.Controllers
 				khoa.Sdt = input.SDT;
 				khoa.Filter = input.MaKhoa + " " + input.TenKhoa;
 
-				//List<OutputImage> listimage = new List<OutputImage>();
-				//foreach (var img in input.Images)
-				//{
-				//	OutputImage output = new OutputImage();
-				//	output.UrlImage = UploadFiles.SaveImage(img);
-				//	output.Position = 1;
-				//	listimage.Add(output);
-				//}
-				//khoa.UrlImages = JsonSerializer.Serialize(listimage);
+				List<OutputImage> listimage = new List<OutputImage>();
+				foreach (var img in input.Images)
+				{
+					OutputImage output = new OutputImage();
+					output.UrlImage = UploadFiles.SaveImage(img);
+					output.Position = 1;
+					listimage.Add(output);
+				}
+				khoa.UrlImages = JsonSerializer.Serialize(listimage);
+				//khoa.UrlImages = listimage;
+
 
 				_context.Khoas.Add(khoa);
 				_context.SaveChanges();
-				return Ok();
+				return Ok(khoa);
 			}
 			return BadRequest();
 		}

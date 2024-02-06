@@ -1,4 +1,8 @@
-﻿namespace qlbhAPI.Models.Khoa
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace qlbhAPI.Models.Khoa
 {
 	public class OutputKhoa
 	{

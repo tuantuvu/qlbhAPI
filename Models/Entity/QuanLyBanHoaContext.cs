@@ -25,6 +25,8 @@ public partial class QuanLyBanHoaContext : DbContext
 
     public virtual DbSet<SinhVien> SinhViens { get; set; }
 
+    public virtual DbSet<TaiKhoan> TaiKhoans { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("name=Default");
 
